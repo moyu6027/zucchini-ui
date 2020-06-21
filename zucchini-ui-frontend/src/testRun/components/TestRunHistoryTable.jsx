@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import toNiceDate from "../../ui/toNiceDate";
 import CounterBadge from "../../ui/components/CounterBadge";
 import TabularDataTable, { TabularDataRow } from "../../ui/components/TabularDataTable";
+import Paginated from "../../ui/components/Paginated";
 
 export default function TestRunHistoryTable() {
   const history = useSelector((state) => state.testRun.history);
@@ -15,9 +16,16 @@ export default function TestRunHistoryTable() {
   });
 
   return (
-    <TabularDataTable columnNames={["Tir de test", "Total", "Succès", "Échecs", "En attente", "Non joués", "Analysés"]}>
-      {rows}
-    </TabularDataTable>
+    <Paginated
+      items={rows}
+      render={(items) => (
+        <TabularDataTable
+          columnNames={["Tir de test", "Total", "Succès", "Échecs", "En attente", "Non joués", "Analysés"]}
+        >
+          {items}
+        </TabularDataTable>
+      )}
+    />
   );
 }
 

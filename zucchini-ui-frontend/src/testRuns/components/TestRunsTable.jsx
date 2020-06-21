@@ -8,6 +8,7 @@ import { selectLatestTestRuns } from "../selectors";
 import useQueryParams from "../../useQueryParams";
 import CounterBadge from "../../ui/components/CounterBadge";
 import TabularDataTable, { TabularDataRow } from "../../ui/components/TabularDataTable";
+import Paginated from "../../ui/components/Paginated";
 
 export default function TestRunsTable() {
   const testRuns = useSelector(selectLatestTestRuns);
@@ -24,23 +25,28 @@ export default function TestRunsTable() {
   const rows = selectedTestRuns.map((testRun) => <TestRunTableRow key={testRun.id} testRun={testRun} />);
 
   return (
-    <TabularDataTable
-      columnNames={[
-        "Type",
-        "Environnement",
-        "Nom",
-        "Tir de test",
-        "Total",
-        "Succès",
-        "Échecs",
-        "En attente",
-        "Non joués",
-        "Analysés"
-      ]}
-      emptyDescription="Aucun tir"
-    >
-      {rows}
-    </TabularDataTable>
+    <Paginated
+      items={rows}
+      render={(items) => (
+        <TabularDataTable
+          columnNames={[
+            "Type",
+            "Environnement",
+            "Nom",
+            "Tir de test",
+            "Total",
+            "Succès",
+            "Échecs",
+            "En attente",
+            "Non joués",
+            "Analysés"
+          ]}
+          emptyDescription="Aucun tir"
+        >
+          {items}
+        </TabularDataTable>
+      )}
+    />
   );
 }
 
